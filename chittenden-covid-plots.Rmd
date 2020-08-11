@@ -10,10 +10,23 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+```{r}
+CHITTENDEN_DATA_URL <- "https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/VIEW_EPI_CountyDailyCountTS_PUBLIC/FeatureServer/0/query?where=CNTYGEOID%3D50007&outFields=date,C_New,D_New&returnGeometry=false&outSR=4326&f=json"
+
+
+getLatestCovidData <- function() {
+  res <- httr::GET(CHITTENDEN_DATA_URL)
+  jsonlite::fromJSON(httr::content(res, "text"))$features$attributes %>%
+    rename(new_cases=C_New, new_deaths=D_New) %>%
+    mutate(date = as.POSIXct(date/1000, origin="1970-01-01"))  
+}
+```
 
 ```{r}
-covid <- read_csv('data/chittenden_covid.csv')
+covid <- getLatestCovidData()
+covid
 ```
+
 
 ```{r}
 ggplot(covid) +
