@@ -1,0 +1,45 @@
+---
+title: "COVID-19 in Chittenden County"
+author: "David Howell"
+date: "8/11/2020"
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+```{r}
+covid <- read_csv('data/chittenden_covid.csv')
+```
+
+```{r}
+ggplot(covid) +
+  geom_bar(aes(x=date, y=new_cases), stat='identity', color='gray') +
+  labs(x="Date", y="New Cases", title="COVID-19 in Chittenden Count, VT") +
+  theme_classic()
+```
+```{r}
+ggplot(covid) +
+  geom_bar(aes(x=date, y=new_deaths), stat='identity', color='gray') +
+  labs(x="Date", y="New Cases", title="COVID-19 in Chittenden Count, VT") +
+  theme_classic()
+```
+
+```{r}
+ggplot(covid) +
+  geom_bar(aes(x=date, y=new_cases), stat='identity', color='gray') +
+  geom_line(aes(x=date, y=cumsum(new_cases)), color="gray") +
+  labs(x="Date", y="New Cases", title="COVID-19 in Chittenden Count, VT") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(covid) +
+  geom_bar(aes(x=date, y=new_deaths), stat='identity', color='gray') +
+  geom_line(aes(x=date, y=cumsum(new_deaths)), color="gray") +
+  labs(x="Date", y="New Deaths", title="COVID-19 in Chittenden Count, VT") +
+  theme_minimal()
+```
