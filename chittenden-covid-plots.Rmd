@@ -24,7 +24,7 @@ getLatestCovidData <- function() {
 
 ```{r}
 covid <- getLatestCovidData()
-covid
+tail(covid)
 ```
 
 
@@ -48,6 +48,14 @@ ggplot(covid) +
   labs(x="Date", y="New Cases", title="COVID-19 in Chittenden Count, VT") +
   theme_minimal()
 ```
+
+```{r}
+ggplot(covid %>% mutate(active_cases = RcppRoll::roll_sumr(new_cases, n=14) / 163774 * 100000)) +
+  geom_bar(aes(x=date, y=active_cases), stat='identity', color="gray") +
+  labs(x="Date", y="New Cases, Last 14 Days", title="COVID-19 in Chittenden Count, VT") +
+  theme_minimal()
+```
+
 
 ```{r}
 ggplot(covid) +
