@@ -9,15 +9,16 @@
     }
 
     covid <- getLatestCovidData()
+    write_csv(covid, "data/chittenden_covid.csv")
     tail(covid)
 
     ##           date new_cases new_deaths
-    ## 156 2020-08-10         5          0
-    ## 157 2020-08-11         0          0
-    ## 158 2020-08-12         3          0
-    ## 159 2020-08-13        10          0
     ## 160 2020-08-14         4          0
     ## 161 2020-08-15         4          0
+    ## 162 2020-08-16         7          0
+    ## 163 2020-08-17         0          0
+    ## 164 2020-08-18         1          0
+    ## 165 2020-08-19         2          0
 
     ggplot(covid) +
       geom_bar(aes(x=date, y=new_cases), stat='identity', color='gray') +

@@ -24,9 +24,9 @@ getLatestCovidData <- function() {
 
 ```{r}
 covid <- getLatestCovidData()
+write_csv(covid, "data/chittenden_covid.csv")
 tail(covid)
 ```
-
 
 ```{r}
 ggplot(covid) +
